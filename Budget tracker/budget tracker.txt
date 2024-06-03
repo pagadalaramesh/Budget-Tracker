@@ -1,0 +1,65 @@
+class BudgetTracker:
+    def __init__(self):
+        self.balance = 0
+        self.expenses = []
+        self.categories = {}
+
+    def add_income(self, amount):
+        self.balance += amount
+
+    def add_expense(self, category, description, amount):
+        self.balance -= amount
+        self.expenses.append((category, description, amount))
+        if category in self.categories:
+            self.categories[category] += amount
+        else:
+            self.categories[category] = amount
+
+    def view_balance(self):
+        print(f"Current Balance: ${self.balance}")
+
+    def view_expenses(self):
+        print("Expense History:")
+        for category, description, amount in self.expenses:
+            print(f"{category} - {description}: ${amount}")
+
+    def view_categories(self):
+        print("Expense Categories:")
+        for category, amount in self.categories.items():
+            print(f"{category}: ${amount}")
+
+def main():
+    budget_tracker = BudgetTracker()
+
+    while True:
+        print("\n1. Add Income")
+        print("2. Add Expense")
+        print("3. View Balance")
+        print("4. View Expenses")
+        print("5. View Categories")
+        print("6. Exit")
+
+        choice = input("Enter your choice: ")
+
+        if choice == '1':
+            amount = float(input("Enter income amount: "))
+            budget_tracker.add_income(amount)
+        elif choice == '2':
+            category = input("Enter expense category: ")
+            description = input("Enter expense description: ")
+            amount = float(input("Enter expense amount: "))
+            budget_tracker.add_expense(category, description, amount)
+        elif choice == '3':
+            budget_tracker.view_balance()
+        elif choice == '4':
+            budget_tracker.view_expenses()
+        elif choice == '5':
+            budget_tracker.view_categories()
+        elif choice == '6':
+            print("Exiting...")
+            break
+        else:
+            print("Invalid choice, please try again.")
+
+if __name__ == "__main__":
+    main()
